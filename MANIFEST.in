@@ -3,3 +3,4 @@ include setup.cfg
 include README
 include flask_aconfig.py
 include tests.py
+include test_config.yml
