@@ -6,10 +6,10 @@ DEFAULT: &default
 DEVELOPMENT: &development
     <<: *default
     DEBUG: True
-    DATABASE_URI: "mysql://dev:26aes37b4@127.0.0.1/rivershout_dev"
+    DATABASE_URI: "mysql://root:1234@127.0.0.1/dev_db"
 
 TESTING: &testing
     <<: *default
     TESTING: True
-    DATABASE_URI: "mysql://dev:26aes37b4@127.0.0.1/rivershout_test"
+    DATABASE_URI: "mysql://root:1234@127.0.0.1/test_db"
 
