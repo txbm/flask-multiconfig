@@ -1,5 +1,6 @@
 import os
 import yaml
+import new
 
 class AConfig(object):
 
@@ -14,6 +15,7 @@ class AConfig(object):
 
 	def init_app(self, app, format='yaml'):
 		self.format = format
+		self.app = app
 		self.attach_loader()
 
 	def attach_loader(self):
@@ -21,20 +23,20 @@ class AConfig(object):
 		if method_name not in globals():
 			raise Exception('The specified configuration format is not supported!')
 
-		m = globals()[method_name]
+		m = new.instancemethod(globals()[method_name], self.app.config, self.app.config.__class__)
 
 		setattr(self.app.config, method_name, m)
 
 
 def from_yaml(self, path):
-	environment = os.getenv('APP_ENV', 'development').lower()
-	self['ENVIRONMENT'] = environment
-	
+	environment = os.getenv('APP_ENV', 'development').upper()
+	self['ENVIRONMENT'] = environment.lower()
+
 	with open(path) as p:
 		y = yaml.load(p)
 
-	y = y.get(environment, y)
+	e = y.get(environment, y)
 
-	for k in y.iterkeys():
+	for k in e.iterkeys():
 		if k.isupper():
-			self[k] = y[k]
+			self[k] = e[k]
