@@ -22,7 +22,7 @@ Links
 from setuptools import setup
 
 setup(
-	name='flask-aconfig',
+	name='Flask-AConfig',
 	version='0.1',
 	url='http://github.com/petermelias/flask-aconfig',
 	license='BSD',
