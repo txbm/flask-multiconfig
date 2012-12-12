@@ -29,7 +29,7 @@ class AConfig(object):
 
 
 def from_yaml(self, path):
-	environment = os.getenv('APP_ENV', 'development').upper()
+	environment = os.environ.get('APP_ENV', 'development').upper()
 	self['ENVIRONMENT'] = environment.lower()
 
 	with open(path) as p:
