@@ -78,7 +78,7 @@ class HerokuEnv(Source):
 
 	services_available = {
 		'SQL_ALCHEMY': {
-			'SQL_ALCHEMY_DATABASE_URI': 'DATABASE_URL'
+			'SQLALCHEMY_DATABASE_URI': 'DATABASE_URL'
 		},
 		'SENTRY_DSN': {
 			'SENTRY_DSN': 'SENTRY_DSN'
