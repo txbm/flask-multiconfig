@@ -3,12 +3,12 @@ DEFAULT: &default
     TESTING: False
     DATABASE_URI: None
 
-DEVELOPMENT: &development
+DEV: &development
     <<: *default
     DEBUG: True
-    DATABASE_URI: "mysql://root:1234@127.0.0.1/dev_db"
+    SQL_ALCHEMY_DATABASE_URI: "mysql://root:1234@127.0.0.1/dev_db"
 
-TESTING: &testing
+TEST: &testing
     <<: *default
     TESTING: True
     DATABASE_URI: "mysql://root:1234@127.0.0.1/test_db"

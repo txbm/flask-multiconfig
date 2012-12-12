@@ -1,42 +1,136 @@
-import os
 import yaml
-import new
+import os
+
 
 class AConfig(object):
 
-	def __init__(self, app=None, format='yaml'):
+	def __init__(self, app=None, schemas=[]):
+		self.schemas = schemas
+		
 		if app is not None:
 			self.app = app
-			self.init_app(self.app, format)
+			self.init_app(self.app)
 		else:
 			self.app = None
-		
-		self.format = format
 
-	def init_app(self, app, format='yaml'):
-		self.format = format
+
+	def init_app(self, app):
 		self.app = app
-		self.attach_loader()
+		self.reload()
 
-	def attach_loader(self):
-		method_name = 'from_' + self.format
-		if method_name not in globals():
-			raise Exception('The specified configuration format is not supported!')
+	def reload(self):
+		if not self.schemas:
+			return False
 
-		m = new.instancemethod(globals()[method_name], self.app.config, self.app.config.__class__)
+		self.mode = self.app.config.get('MODE', 'development')
+		self.env = self.app.config.get('ENV', 'local')
 
-		setattr(self.app.config, method_name, m)
+		for schema in self.schemas:
+			if schema.mode == self.mode and schema.env == self.env:
+				schema.load(self.app)
 
+class Schema(object):
 
-def from_yaml(self, path):
-	environment = os.environ.get('APP_ENV', 'development').upper()
-	self['ENVIRONMENT'] = environment.lower()
+	def __init__(self, env, mode, source, aconfig=None):
+		self.env = env
+		self.mode = mode
+		self.source = source
+		if aconfig:
+			aconfig.schemas.append(self)
 
-	with open(path) as p:
-		y = yaml.load(p)
+	def load(self, app):
+		kvps = self.source.load()
+		if kvps:
+			for k, v in kvps.iteritems():
+				app.config[k] = v
+			return True
+		
+		return False
 
-	e = y.get(environment, y)
+class Source(object):
 
-	for k in e.iterkeys():
-		if k.isupper():
-			self[k] = e[k]
+	def load(self, app):
+		pass
+
+class Yaml(Source):
+
+	def __init__(self, path, section):
+		self.path = path
+		self.section = section
+
+	def load(self):
+		if not os.path.exists(self.path):
+			return None
+		
+		kvps = {}
+		with open(self.path) as p:
+			y = yaml.load(p)
+
+			s = y.get(self.section, y)
+
+			for k in s.iterkeys():
+				if k.isupper():
+					kvps[k] = s[k]
+		
+		return kvps
+
+class HerokuEnv(Source):
+
+	services_available = {
+		'SQL_ALCHEMY': {
+			'SQL_ALCHEMY_DATABASE_URI': 'DATABASE_URL'
+		},
+		'SENTRY_DSN': {
+			'SENTRY_DSN': 'SENTRY_DSN'
+		},
+		'EXCEPTIONAL': {
+			'EXCEPTIONAL_API_KEY': 'EXCEPTIONAL_API_KEY'
+		},
+		'GOOGLE_DOMAIN': {
+			'GOOGLE_DOMAIN': 'GOOGLE_DOMAIN'
+		},
+		'RABBIT_MQ': {
+			'BROKER_URL': 'RABBITMQ_URL'
+		},
+		'MAILGUN': {
+			'SMTP_SERVER': 'MAILGUN_SMTP_SERVER',
+			'SMTP_LOGIN': 'MAILGUN_SMTP_LOGIN',
+			'SMTP_PASSWORD': 'MAILGUN_SMTP_PASSWORD'
+		},
+		'REDIS': {
+			'REDIS_URL': 'REDISTOGO_URL'
+		},
+		'MONGOLAB': {
+			'MONGO_URL': 'MONGOLAB_URI'
+		},
+		'MONGOHQ': {
+			'MONGO_URL': 'MONGOHQ_URL'
+		},
+		'MEMCACHIER': {
+			'MEMCACHED_SERVERS': 'MEMCAHIER_SERVERS',
+			'MEMCACHED_USERNAME': 'MEMCACHIER_USERNAME',
+			'MEMCACHED_PASSWORD': 'MEMCACHIER_PASSWORD'
+		}
+	}
+
+	services_enabled = []
+
+	def __init__(self, services=None):
+		if isinstance(services, str):
+			services = [services]
+
+		self.services_enabled = services
+
+	def load(self):
+		if not self.services_enabled:
+			return None
+
+		kvps = {}
+		for service in self.services_enabled:
+			if service in self.services_available:
+				for k, v in self.services_available[service].iteritems():
+					envar = os.environ.get(v, None)
+					if envar:
+						kvps[k] = envar
+
+		return kvps
