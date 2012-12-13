@@ -25,9 +25,14 @@ class AConfig(object):
 		self.mode = self.app.config.get('MODE', 'development')
 		self.env = self.app.config.get('ENV', 'local')
 
+		loaded = []
 		for schema in self.schemas:
 			if schema.mode == self.mode and schema.env == self.env:
 				schema.load(self.app)
+				loaded.append(schema)
+
+		if not loaded:
+			raise Exception('No valid configuration schemas were loaded! App cannot run...')
 
 class Schema(object):
 
