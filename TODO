@@ -1,7 +1,4 @@
 TODO
 ~~~~
 
-* Add in support for dynamic app name prefix before ENV variables
-* Add in other markup support
-* Add in option to override built-in config methods (from_pyfile, from_object, etc...)
-  to include support for the ENV variable mode-setting
+* Allow mode specification to be a list

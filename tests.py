@@ -16,7 +16,7 @@ class TestFlaskAConfig(unittest.TestCase):
 		Schema('local', 'development', Yaml('test_config.yml', 'DEV'), self.a)
 		self.a.reload()
 
-		self.assertEqual(self.app.config.get('SQL_ALCHEMY_DATABASE_URI'), 'mysql://root:1234@127.0.0.1/dev_db')
+		self.assertEqual(self.app.config.get('SQLALCHEMY_DATABASE_URI'), 'mysql://root:1234@127.0.0.1/dev_db')
 
 	def test_herokuenv(self):
 		Schema('heroku', 'development', HerokuEnv(['SQL_ALCHEMY']), self.a)
@@ -24,7 +24,7 @@ class TestFlaskAConfig(unittest.TestCase):
 		os.environ['DATABASE_URL'] = 'mysql://not:real@nowhere.com/herp'
 		self.a.reload()
 
-		self.assertEqual(self.app.config.get('SQL_ALCHEMY_DATABASE_URI'), 'mysql://not:real@nowhere.com/herp')
+		self.assertEqual(self.app.config.get('SQLALCHEMY_DATABASE_URI'), 'mysql://not:real@nowhere.com/herp')
 
 	def test_cascade(self):
 		Schema('local', 'development', Yaml('test_config.yml', 'DEV'), self.a)
@@ -32,7 +32,7 @@ class TestFlaskAConfig(unittest.TestCase):
 		os.environ['DATABASE_URL'] = 'mysql://not:real@nowhere.com/herp'
 		self.a.reload()
 
-		self.assertEqual(self.app.config.get('SQL_ALCHEMY_DATABASE_URI'), 'mysql://not:real@nowhere.com/herp')
+		self.assertEqual(self.app.config.get('SQLALCHEMY_DATABASE_URI'), 'mysql://not:real@nowhere.com/herp')
 
 	def test_cascade_defer(self):
 		Schema('local', 'development', Yaml('test_config.yml', 'DEV'), self.a)
@@ -40,7 +40,7 @@ class TestFlaskAConfig(unittest.TestCase):
 		del os.environ['DATABASE_URL']
 		self.a.reload()
 
-		self.assertEqual(self.app.config.get('SQL_ALCHEMY_DATABASE_URI'), 'mysql://root:1234@127.0.0.1/dev_db')		
+		self.assertEqual(self.app.config.get('SQLALCHEMY_DATABASE_URI'), 'mysql://root:1234@127.0.0.1/dev_db')		
 
 if __name__ =='__main__':
     unittest.main()

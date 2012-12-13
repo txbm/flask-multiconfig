@@ -6,7 +6,7 @@ DEFAULT: &default
 DEV: &development
     <<: *default
     DEBUG: True
-    SQL_ALCHEMY_DATABASE_URI: "mysql://root:1234@127.0.0.1/dev_db"
+    SQLALCHEMY_DATABASE_URI: "mysql://root:1234@127.0.0.1/dev_db"
 
 TEST: &testing
     <<: *default
