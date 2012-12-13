@@ -32,7 +32,7 @@ class AConfig(object):
 				loaded.append(schema)
 
 		if not loaded:
-			raise Exception('No valid configuration schemas were loaded! App cannot run...')
+			raise Exception('No configuration schemas were selected!')
 
 class Schema(object):
 
@@ -112,7 +112,7 @@ class HerokuEnv(Source):
 			'MONGO_URL': 'MONGOHQ_URL'
 		},
 		'MEMCACHIER': {
-			'MEMCACHED_SERVERS': 'MEMCAHIER_SERVERS',
+			'MEMCACHED_SERVERS': 'MEMCACHIER_SERVERS',
 			'MEMCACHED_USERNAME': 'MEMCACHIER_USERNAME',
 			'MEMCACHED_PASSWORD': 'MEMCACHIER_PASSWORD'
 		}
