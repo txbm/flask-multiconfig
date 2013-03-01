@@ -84,7 +84,7 @@ class Yaml(Source):
 class HerokuEnv(Source):
 
 	services_available = {
-		'SQL_ALCHEMY': {
+		'AMAZON_RDS': {
 			'SQLALCHEMY_DATABASE_URI': 'DATABASE_URL'
 		},
 		'SENTRY_DSN': {
@@ -118,8 +118,8 @@ class HerokuEnv(Source):
 			'MEMCACHED_USERNAME': 'MEMCACHIER_USERNAME',
 			'MEMCACHED_PASSWORD': 'MEMCACHIER_PASSWORD'
 		},
-		'POSTGRES_AMBER': {
-			'SQLALCHEMY_DATABASE_URI': 'HEROKU_POSTGRESQL_AMBER_URL'
+		'POSTGRES': {
+			'SQLALCHEMY_DATABASE_URI': 'DATABASE_URL'
 		}
 	}
 
