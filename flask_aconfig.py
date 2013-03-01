@@ -79,6 +79,8 @@ class Yaml(Source):
 		
 		return kvps
 
+# this needs some slight rethinking-- basically there needs to be a layer of indirection between SERVICE and LIBRARY. So for example, SQLALCHEMY_URL and DATABASE_URL are not the same thing. Ya feel me?
+
 class HerokuEnv(Source):
 
 	services_available = {
@@ -117,7 +119,7 @@ class HerokuEnv(Source):
 			'MEMCACHED_PASSWORD': 'MEMCACHIER_PASSWORD'
 		},
 		'POSTGRES_AMBER': {
-			'HEROKU_POSTGRESQL_AMBER_URL': 'DATABASE_URL'
+			'SQLALCHEMY_DATABASE_URI': 'HEROKU_POSTGRESQL_AMBER_URL'
 		}
 	}
 
