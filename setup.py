@@ -19,7 +19,7 @@ Links
 
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
 	name='Flask-AConfig',
@@ -30,7 +30,7 @@ setup(
 	author_email='petermelias@gmail.com',
 	description='A simple extension to add advanced configuration source support.',
 	long_description=__doc__,
-	py_modules=['flask_aconfig'],
+	py_modules=find_packages(),
 	zip_safe=False,
 	include_package_data=True,
 	platforms='any',

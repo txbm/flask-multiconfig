@@ -2,3 +2,4 @@ TODO
 ~~~~
 
 * Allow mode specification to be a list
+* Replace Unittest tests with Nosetest
