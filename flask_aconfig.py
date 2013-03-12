@@ -1,7 +1,6 @@
 import yaml
 import os
 
-
 class AConfig(object):
 
 	def __init__(self, app=None, schemas=[]):
