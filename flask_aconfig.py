@@ -131,10 +131,8 @@ class HerokuEnv(Source):
 		self.services_enabled = services
 
 	def load(self):
-		if not self.services_enabled:
-			return None
+		kvps = os.environ.copy()
 
-		kvps = {}
 		for service in self.services_enabled:
 			if service in self.services_available:
 				for k, v in self.services_available[service].iteritems():

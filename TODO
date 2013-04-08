@@ -1,5 +1,10 @@
 TODO
 ~~~~
 
-* Allow mode specification to be a list
+* Allow mode / env specifications to be a list
 * Replace Unittest tests with Nosetest
+* Abstract the ENV_VAR source to use any ENV, change HerokuEnv to be a translator / normalizer / melter
+--> basically the point is to use it for combining multiple service alternatives and unifying the ENV_VAR name
+* Improve HerokuEnv source to be service agnostic, add a different abstraction for services
+* Add in other file formats for config: INI, PyObject
+* Add in a database config option
