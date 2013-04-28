@@ -53,8 +53,12 @@ class Schema(object):
 
 class Source(object):
 
-	def load(self, app):
-		pass
+	def load(self): pass
+
+class Environment(Source):
+
+	def load(self):
+		return os.environ.copy()
 
 class Yaml(Source):
 
