@@ -55,6 +55,14 @@ class Source(object):
 
 	def load(self): pass
 
+class Default(Source):
+
+	def __init__(self, config_dict):
+		self.config_dict = config_dict
+
+	def load(self):
+		return self.config_dict
+
 class Environment(Source):
 
 	def load(self):
