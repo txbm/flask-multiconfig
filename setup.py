@@ -1,5 +1,5 @@
 """
-Flask AConfig
+Flask Multiconfig
 -----------------
 
 A simple extension that adds new possible configuration formats
@@ -16,7 +16,7 @@ from setuptools import setup, find_packages
 setup(
 	name='flask-multiconfig',
 	version='0.1',
-	url='http://github.com/petermelias/flask-aconfig',
+	url='http://github.com/petermelias/flask-multiconfig',
 	license='BSD',
 	author='Peter M. Elias',
 	author_email='petermelias@gmail.com',
