@@ -1,4 +1,4 @@
-flask-aconfig
+Flask MultiConfig
 =============
 
 This is the beginning of a somewhat advanced configuration library for Flask
