@@ -1,5 +1,5 @@
+global-include *.py
 include setup.cfg
 include README.md
 include LICENSE
 include test_config.yml
-global-include *.py
