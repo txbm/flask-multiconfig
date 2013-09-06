@@ -1,7 +1,6 @@
 import yaml
 import os
 
-
 class AConfig(object):
 
 	def __init__(self, app=None, schemas=[]):
@@ -54,8 +53,20 @@ class Schema(object):
 
 class Source(object):
 
-	def load(self, app):
-		pass
+	def load(self): pass
+
+class Default(Source):
+
+	def __init__(self, config_dict):
+		self.config_dict = config_dict
+
+	def load(self):
+		return self.config_dict
+
+class Environment(Source):
+
+	def load(self):
+		return os.environ.copy()
 
 class Yaml(Source):
 
@@ -132,10 +143,8 @@ class HerokuEnv(Source):
 		self.services_enabled = services
 
 	def load(self):
-		if not self.services_enabled:
-			return None
+		kvps = os.environ.copy()
 
-		kvps = {}
 		for service in self.services_enabled:
 			if service in self.services_available:
 				for k, v in self.services_available[service].iteritems():

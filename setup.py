@@ -30,7 +30,7 @@ setup(
 	author_email='petermelias@gmail.com',
 	description='A simple extension to add advanced configuration source support.',
 	long_description=__doc__,
-	py_modules=find_packages(),
+	py_modules=['flask_aconfig'],
 	zip_safe=False,
 	include_package_data=True,
 	platforms='any',
