@@ -9,14 +9,6 @@ setting environment variables.
 Currently adds support for YAML and setting an environment variable
 for application modes.
 
-Links
-`````
-
-* `development version
-  <http://github.com/petermelias/flask-aconfig/zipball/master#egg=Flask-AConfig-dev>`_
-
-
-
 """
 
 from setuptools import setup, find_packages
