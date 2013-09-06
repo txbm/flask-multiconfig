@@ -14,7 +14,7 @@ for application modes.
 from setuptools import setup, find_packages
 
 setup(
-	name='flask-aconfig',
+	name='flask-multiconfig',
 	version='0.1',
 	url='http://github.com/petermelias/flask-aconfig',
 	license='BSD',
